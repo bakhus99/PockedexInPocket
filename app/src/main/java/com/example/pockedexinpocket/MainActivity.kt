@@ -17,9 +17,11 @@ import androidx.navigation.compose.navArgument
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgs
 import com.example.pockedexinpocket.data.remote.responses.Pokemon
+import com.example.pockedexinpocket.pokemonDetail.PokemonDetailScreen
 import com.example.pockedexinpocket.pokemonlist.PokemonListScreen
 import com.example.pockedexinpocket.ui.theme.PockedexInPocketTheme
 import dagger.hilt.android.AndroidEntryPoint
+import java.util.*
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
@@ -29,8 +31,10 @@ class MainActivity : ComponentActivity() {
             PockedexInPocketTheme {
 
                 val navController = rememberNavController()
-                NavHost(navController = navController,
-                    startDestination = "pokemon_list_screen") {
+                NavHost(
+                    navController = navController,
+                    startDestination = "pokemon_list_screen"
+                ) {
                     composable("pokemon_list_screen") {
                         PokemonListScreen(navController = navController)
                     }
@@ -54,8 +58,11 @@ class MainActivity : ComponentActivity() {
                         val pokemonName = remember {
                             it.arguments?.getString("pokemonName")
                         }
-
-
+                        PokemonDetailScreen(
+                            dominantColor = dominantColor,
+                            pokemonName = pokemonName?.toLowerCase(Locale.ROOT) ?: "",
+                            navController = navController
+                        )
                     }
                 }
             }
